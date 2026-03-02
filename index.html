@@ -18,13 +18,18 @@
         }
         #gameContainer {
             position: relative;
-            max-width: 100%;
-            max-height: 100vh;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         canvas {
             display: block;
             border-radius: 12px;
             box-shadow: 0 0 40px rgba(255, 100, 0, 0.3);
+            max-width: 100%;
+            max-height: 100vh;
         }
         #ui {
             position: absolute;
@@ -149,7 +154,7 @@
 </head>
 <body>
     <div id="gameContainer">
-        <canvas id="gameCanvas"></canvas>
+        <canvas id="gameCanvas" width="600" height="800"></canvas>
         
         <div id="ui">
             <div class="stat">⚽ Score: <span id="score">0</span></div>
@@ -189,8 +194,19 @@
         
         // Set canvas size
         function resize() {
-            canvas.width = Math.min(window.innerWidth - 20, 600);
-            canvas.height = Math.min(window.innerHeight - 20, 800);
+            const w = Math.min(window.innerWidth - 20, 600);
+            const h = Math.min(window.innerHeight - 20, 800);
+            canvas.width = w;
+            canvas.height = h;
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            
+            // Update player position if game hasn't started
+            if (!gameRunning) {
+                player.x = canvas.width / 2;
+                player.y = canvas.height / 2;
+                joystick.centerY = canvas.height - 80;
+            }
         }
         resize();
         window.addEventListener('resize', resize);
@@ -715,8 +731,10 @@
             powerups = [];
             particles = [];
             floatingTexts = [];
-            draw();
         }
+        
+        // Initial render
+        draw();
         
         function gameOver() {
             gameRunning = false;
