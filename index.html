@@ -6,30 +6,30 @@
     <title>Michael's Brawl Stadium</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
         body {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            overflow: hidden;
         }
         #gameContainer {
             position: relative;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
         canvas {
             display: block;
             border-radius: 12px;
             box-shadow: 0 0 40px rgba(255, 100, 0, 0.3);
             max-width: 100%;
-            max-height: 100vh;
+            max-height: 100%;
             background: #1a1a2e;
         }
         #ui {
@@ -242,17 +242,18 @@
             
             // Resize canvas
             function resize() {
-                const w = Math.min(window.innerWidth - 20, 600);
-                const h = Math.min(window.innerHeight - 20, 800);
-                canvas.width = w;
-                canvas.height = h;
-                canvas.style.width = w + 'px';
-                canvas.style.height = h + 'px';
+                const container = document.getElementById('gameContainer');
+                const maxW = Math.min(container.clientWidth - 20, 600);
+                const maxH = Math.min(container.clientHeight - 20, 800);
+                canvas.width = maxW;
+                canvas.height = maxH;
+                canvas.style.width = maxW + 'px';
+                canvas.style.height = maxH + 'px';
                 
                 if (!gameRunning) {
-                    player.x = w / 2;
-                    player.y = h / 2;
-                    joystick.centerY = h - 80;
+                    player.x = maxW / 2;
+                    player.y = maxH / 2;
+                    joystick.centerY = maxH - 80;
                 }
             }
             
