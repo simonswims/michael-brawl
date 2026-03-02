@@ -192,6 +192,36 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         
+        // Game state
+        let gameRunning = false;
+        let score = 0;
+        let wave = 1;
+        let powerupActive = false;
+        let powerupTimer = 0;
+        
+        // Player
+        const player = {
+            x: 300,
+            y: 400,
+            radius: 20,
+            speed: 4,
+            health: 100,
+            maxHealth: 100,
+            angle: 0,
+            emoji: '👦'
+        };
+        
+        // Joystick
+        const joystick = {
+            centerX: 80,
+            centerY: 720,
+            radius: 60,
+            knobRadius: 25,
+            active: false,
+            dx: 0,
+            dy: 0
+        };
+        
         // Set canvas size
         function resize() {
             const w = Math.min(window.innerWidth - 20, 600);
@@ -210,36 +240,6 @@
         }
         resize();
         window.addEventListener('resize', resize);
-        
-        // Game state
-        let gameRunning = false;
-        let score = 0;
-        let wave = 1;
-        let powerupActive = false;
-        let powerupTimer = 0;
-        
-        // Player
-        const player = {
-            x: canvas.width / 2,
-            y: canvas.height / 2,
-            radius: 20,
-            speed: 4,
-            health: 100,
-            maxHealth: 100,
-            angle: 0,
-            emoji: '👦'
-        };
-        
-        // Joystick
-        const joystick = {
-            centerX: 80,
-            centerY: canvas.height - 80,
-            radius: 60,
-            knobRadius: 25,
-            active: false,
-            dx: 0,
-            dy: 0
-        };
         
         // Entities
         let enemies = [];
